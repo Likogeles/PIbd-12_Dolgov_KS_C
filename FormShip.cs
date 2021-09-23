@@ -36,6 +36,7 @@ namespace WinFormsLaba1
 			Draw();
 		}
 
+
 		private void buttonMove_Click(object sender, EventArgs e)
 		{
 			if (ship != null)
