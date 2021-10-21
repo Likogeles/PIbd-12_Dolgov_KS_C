@@ -45,7 +45,7 @@ namespace WinFormsLaba1
             this.pictureBoxShips.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxShips.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxShips.Name = "pictureBoxShips";
-            this.pictureBoxShips.Size = new System.Drawing.Size(1016, 592);
+            this.pictureBoxShips.Size = new System.Drawing.Size(963, 477);
             this.pictureBoxShips.TabIndex = 0;
             this.pictureBoxShips.TabStop = false;
             // 
@@ -64,7 +64,7 @@ namespace WinFormsLaba1
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonUp.BackgroundImage")));
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonUp.Location = new System.Drawing.Point(938, 514);
+            this.buttonUp.Location = new System.Drawing.Point(885, 399);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 30);
             this.buttonUp.TabIndex = 2;
@@ -76,7 +76,7 @@ namespace WinFormsLaba1
             this.buttonDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDown.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDown.BackgroundImage")));
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonDown.Location = new System.Drawing.Point(938, 550);
+            this.buttonDown.Location = new System.Drawing.Point(885, 435);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 30);
             this.buttonDown.TabIndex = 3;
@@ -88,7 +88,7 @@ namespace WinFormsLaba1
             this.buttonLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLeft.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonLeft.BackgroundImage")));
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonLeft.Location = new System.Drawing.Point(902, 550);
+            this.buttonLeft.Location = new System.Drawing.Point(849, 435);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(30, 30);
             this.buttonLeft.TabIndex = 4;
@@ -100,7 +100,7 @@ namespace WinFormsLaba1
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonRight.BackgroundImage")));
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRight.Location = new System.Drawing.Point(974, 550);
+            this.buttonRight.Location = new System.Drawing.Point(921, 435);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(30, 30);
             this.buttonRight.TabIndex = 5;
@@ -121,7 +121,7 @@ namespace WinFormsLaba1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 592);
+            this.ClientSize = new System.Drawing.Size(963, 477);
             this.Controls.Add(this.buttonCreateBoat);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonLeft);

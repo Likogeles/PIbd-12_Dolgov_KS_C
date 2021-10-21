@@ -81,7 +81,7 @@ namespace WinFormsLaba1
                     break;
             }
         }
-        public override void DrawTransport(Graphics g)
+        public override void DrawTransport(Graphics g, int x = 0, int y = 0)
         {
             // Отрисовка Корабля
             Pen pen = new Pen(Color.Black);
@@ -89,18 +89,18 @@ namespace WinFormsLaba1
             Brush mainBrush = new SolidBrush(MainColor);
             Brush dopBrush = new SolidBrush(Color.Brown);
 
-            PointF p1 = new PointF(_startPosX + 0, _startPosY + 0);
-            PointF p2 = new PointF(_startPosX + 100, _startPosY + 0);
-            PointF p3 = new PointF(_startPosX + 140, _startPosY + 30);
-            PointF p4 = new PointF(_startPosX + 100, _startPosY + 60);
-            PointF p5 = new PointF(_startPosX + 0, _startPosY + 60);
+            PointF p1 = new PointF(_startPosX + 0 + x, _startPosY + 0 + y);
+            PointF p2 = new PointF(_startPosX + 100 + x, _startPosY + 0 + y);
+            PointF p3 = new PointF(_startPosX + 140 + x, _startPosY + 30 + y);
+            PointF p4 = new PointF(_startPosX + 100 + x, _startPosY + 60 + y);
+            PointF p5 = new PointF(_startPosX + 0 + x, _startPosY + 60 + y);
             PointF[] points = { p1, p2, p3, p4, p5 };
 
             g.DrawPolygon(pen, points);
             g.FillPolygon(mainBrush, points);
 
-            g.DrawRectangle(pen, (int)_startPosX + 10, (int)_startPosY + 10, 80, 40);
-            g.FillRectangle(dopBrush, (int)_startPosX + 10, (int)_startPosY + 10, 80, 40);
+            g.DrawRectangle(pen, (int)_startPosX + 10 + x, (int)_startPosY + 10 + y, 80, 40);
+            g.FillRectangle(dopBrush, (int)_startPosX + 10 + x, (int)_startPosY + 10 + y, 80, 40);
         }
     }
 }

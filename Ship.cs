@@ -53,23 +53,22 @@ namespace WinFormsLaba1
 			Rotors = rotors;
 			RotorsNum = rotorsNum;
 		}
-		
+
 		/// <summary>
 		/// Отрисовка катера
 		/// </summary>
 		/// <param name="g"></param>
 		/// 
-		
-		public override void DrawTransport(Graphics g)
-		{
 
+		public override void DrawTransport(Graphics g, int x=0, int y = 0)
+		{
 			// Отрисовка катера
 			Pen pen = new Pen(Color.Black);
 			Pen doppen = new Pen(DopColor, 3);
 			Brush mainBrush = new SolidBrush(MainColor);
 			Brush dopBrush = new SolidBrush(DopColor);
 
-			base.DrawTransport(g);
+			base.DrawTransport(g, x, y);
 
 			
 			PointF p1;
@@ -82,16 +81,16 @@ namespace WinFormsLaba1
 
 			if (Window)
 			{
-				g.FillRectangle(new SolidBrush(Color.Blue), (int)_startPosX + 70, (int)_startPosY + 12, 19, 36);
+				g.FillRectangle(new SolidBrush(Color.Blue), (int)_startPosX + 70 + x, (int)_startPosY + 12 + y, 19, 36);
 			}
 			
 			if (Lines)
 			{
-				p1 = new PointF((int)_startPosX + 4, (int)_startPosY + 4);
-				p2 = new PointF((int)_startPosX + 96, (int)_startPosY + 4);
-				p3 = new PointF((int)_startPosX + 132, (int)_startPosY + 30);
-				p4 = new PointF((int)_startPosX + 96, (int)_startPosY + 56);
-				p5 = new PointF((int)_startPosX + 4, (int)_startPosY + 56);
+				p1 = new PointF((int)_startPosX + 4 + x, (int)_startPosY + 4 + y);
+				p2 = new PointF((int)_startPosX + 96 + x, (int)_startPosY + 4 + y);
+				p3 = new PointF((int)_startPosX + 132 + x, (int)_startPosY + 30 + y);
+				p4 = new PointF((int)_startPosX + 96 + x, (int)_startPosY + 56 + y);
+				p5 = new PointF((int)_startPosX + 4 + x, (int)_startPosY + 56 + y);
 				points[0] = p1;
 				points[1] = p2;
 				points[2] = p3;
@@ -106,11 +105,11 @@ namespace WinFormsLaba1
             {
 				if(RotorsNum == 1)
 				{
-					p1 = new PointF(_startPosX - 7, _startPosY + 20);
-					p2 = new PointF(_startPosX - 5, _startPosY + 24);
-					p3 = new PointF(_startPosX + 0, _startPosY + 30);
-					p4 = new PointF(_startPosX - 5, _startPosY + 36);
-					p5 = new PointF(_startPosX - 7, _startPosY + 40);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 20 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 24 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 30 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 36 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 40 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
@@ -120,11 +119,11 @@ namespace WinFormsLaba1
 				}
 				else if (RotorsNum == 2)
 				{
-					p1 = new PointF(_startPosX - 7, _startPosY + 0);
-					p2 = new PointF(_startPosX - 5, _startPosY + 4);
-					p3 = new PointF(_startPosX + 0, _startPosY + 10);
-					p4 = new PointF(_startPosX - 5, _startPosY + 16);
-					p5 = new PointF(_startPosX - 7, _startPosY + 20);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 0 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 4 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 10 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 16 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 20 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
@@ -132,11 +131,11 @@ namespace WinFormsLaba1
 					points[4] = p5;
 					g.FillPolygon(dopBrush, points);
 
-					p1 = new PointF(_startPosX - 7, _startPosY + 60);
-					p2 = new PointF(_startPosX - 5, _startPosY + 56);
-					p3 = new PointF(_startPosX + 0, _startPosY + 50);
-					p4 = new PointF(_startPosX - 5, _startPosY + 44);
-					p5 = new PointF(_startPosX - 7, _startPosY + 40);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 60 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 56 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 50 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 44 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 40 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
@@ -146,11 +145,11 @@ namespace WinFormsLaba1
 				}
 				else if (RotorsNum == 3)
 				{
-					p1 = new PointF(_startPosX - 7, _startPosY + 0);
-					p2 = new PointF(_startPosX - 5, _startPosY + 4);
-					p3 = new PointF(_startPosX + 0, _startPosY + 10);
-					p4 = new PointF(_startPosX - 5, _startPosY + 16);
-					p5 = new PointF(_startPosX - 7, _startPosY + 20);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 0 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 4 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 10 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 16 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 20 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
@@ -158,11 +157,11 @@ namespace WinFormsLaba1
 					points[4] = p5;
 					g.FillPolygon(dopBrush, points);
 
-					p1 = new PointF(_startPosX - 7, _startPosY + 20);
-					p2 = new PointF(_startPosX - 5, _startPosY + 24);
-					p3 = new PointF(_startPosX + 0, _startPosY + 30);
-					p4 = new PointF(_startPosX - 5, _startPosY + 36);
-					p5 = new PointF(_startPosX - 7, _startPosY + 40);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 20 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 24 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 30 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 36 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 40 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
@@ -170,11 +169,11 @@ namespace WinFormsLaba1
 					points[4] = p5;
 					g.FillPolygon(dopBrush, points);
 
-					p1 = new PointF(_startPosX - 7, _startPosY + 60);
-					p2 = new PointF(_startPosX - 5, _startPosY + 56);
-					p3 = new PointF(_startPosX + 0, _startPosY + 50);
-					p4 = new PointF(_startPosX - 5, _startPosY + 44);
-					p5 = new PointF(_startPosX - 7, _startPosY + 40);
+					p1 = new PointF(_startPosX - 7 + x, _startPosY + 60 + y);
+					p2 = new PointF(_startPosX - 5 + x, _startPosY + 56 + y);
+					p3 = new PointF(_startPosX + 0 + x, _startPosY + 50 + y);
+					p4 = new PointF(_startPosX - 5 + x, _startPosY + 44 + y);
+					p5 = new PointF(_startPosX - 7 + x, _startPosY + 40 + y);
 					points[0] = p1;
 					points[1] = p2;
 					points[2] = p3;
