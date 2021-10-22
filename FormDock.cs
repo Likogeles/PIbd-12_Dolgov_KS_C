@@ -46,7 +46,7 @@ namespace WinFormsLaba1
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 var boat = new Boat(100, 1000, dialog.Color);
-                if (dock + boat)
+                if (dock + boat != -1)
                 {
                     Draw();
                 }
@@ -73,7 +73,7 @@ namespace WinFormsLaba1
                 {
                     var ship = new Ship(100, 1000, dialog.Color, dialogDop.Color,
                     true, true, true, rnd.Next(1, 3));
-                    if (dock + ship)
+                    if (dock + ship != -1)
                     {
                         Draw();
                     }

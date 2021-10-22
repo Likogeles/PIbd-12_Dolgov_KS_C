@@ -83,7 +83,6 @@ namespace WinFormsLaba1
         }
         public override void DrawTransport(Graphics g, int x = 0, int y = 0)
         {
-            // Отрисовка Корабля
             Pen pen = new Pen(Color.Black);
             Pen doppen = new Pen(Color.Brown, 3);
             Brush mainBrush = new SolidBrush(MainColor);

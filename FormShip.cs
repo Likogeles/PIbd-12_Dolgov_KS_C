@@ -28,7 +28,9 @@ namespace WinFormsLaba1
 		/// <param name="ship"></param>
 		public void SetShip(ITransport boat)
 		{
+			Random rnd = new Random();
 			this.boat = boat;
+			boat.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxShips.Width, pictureBoxShips.Height);
 			Draw();
 	    }
 

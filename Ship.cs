@@ -58,11 +58,8 @@ namespace WinFormsLaba1
 		/// Отрисовка катера
 		/// </summary>
 		/// <param name="g"></param>
-		/// 
-
 		public override void DrawTransport(Graphics g, int x=0, int y = 0)
 		{
-			// Отрисовка катера
 			Pen pen = new Pen(Color.Black);
 			Pen doppen = new Pen(DopColor, 3);
 			Brush mainBrush = new SolidBrush(MainColor);
@@ -70,7 +67,6 @@ namespace WinFormsLaba1
 
 			base.DrawTransport(g, x, y);
 
-			
 			PointF p1;
 			PointF p2;
 			PointF p3;

@@ -51,24 +51,18 @@ namespace WinFormsLaba1
         /// <param name="p">Доки</param>
         /// <param name="boat">Добавляемый корабль</param>
         /// <returns></returns>
-        public static bool operator +(Dock<T> d, T boat)
+        public static int operator +(Dock<T> d, T boat)
         {
             int ind = d._places.Length;
             for(int i = 0; i < d._places.Length; i++)
             {
                 if(d._places[i] == null)
                 {
-                    ind = i;
-                    break;
+                    d._places[i] = boat;
+                    return i;
                 }
             }
-            
-            if (d._places.Length > ind)
-            {
-                d._places[ind] = boat;
-                return true;
-            }
-            return false;
+            return -1;
         }
 
         /// <summary>
