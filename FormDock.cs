@@ -13,28 +13,87 @@ namespace WinFormsLaba1
     public partial class FormDock : Form
     {
         /// <summary>
-        /// Объект от класса-гавани
+        /// Объект от класса-коллекции гаваней
         /// </summary>
-        private readonly Dock<Boat> dock;
+        private readonly DockCollection dockCollection;
         public FormDock()
         {
             InitializeComponent();
-            dock = new Dock<Boat>(pictureBoxDock.Width,
-            pictureBoxDock.Height);
-            Draw();
+            dockCollection = new DockCollection(pictureBoxDock.Width,
+pictureBoxDock.Height);
         }
-
+        /// <summary>
+        /// Заполнение listBoxDocks
+        /// </summary>
+        private void ReloadLevels()
+        {
+            int index = listBoxDocks.SelectedIndex;
+            listBoxDocks.Items.Clear();
+            for (int i = 0; i < dockCollection.Keys.Count; i++)
+            {
+                listBoxDocks.Items.Add(dockCollection.Keys[i]);
+            }
+            if (listBoxDocks.Items.Count > 0 && (index == -1 || index >=
+           listBoxDocks.Items.Count))
+            {
+                listBoxDocks.SelectedIndex = 0;
+            }
+            else if (listBoxDocks.Items.Count > 0 && index > -1 && index <
+           listBoxDocks.Items.Count)
+            {
+                listBoxDocks.SelectedIndex = index;
+            }
+        }
         /// <summary>
         /// Метод отрисовки гавани
         /// </summary>
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxDock.Width, pictureBoxDock.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            dock.Draw(gr);
-            pictureBoxDock.Image = bmp;
+            if (listBoxDocks.SelectedIndex > -1)
+            {//если выбран один из пуктов в listBox (при старте программы ни один пункт
+             //не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться к элементу
+             //listBox)
+                Bitmap bmp = new Bitmap(pictureBoxDock.Width,
+               pictureBoxDock.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                dockCollection[listBoxDocks.SelectedItem.ToString()].Draw(gr);
+                pictureBoxDock.Image = bmp;
+            }
+        }
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить гавань"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonAddDock_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxNewLevelName.Text))
+            {
+                MessageBox.Show("Введите название гавани", "Ошибка",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            dockCollection.AddDock(textBoxNewLevelName.Text);
+            ReloadLevels();
         }
 
+        /// <summary>
+        /// Обработка нажатия кнопки "Удалить гавань"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonDelDock_Click(object sender, EventArgs e)
+        {
+            if (listBoxDocks.SelectedIndex > -1)
+            {
+                if (MessageBox.Show($"Удалить гавань {listBoxDocks.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    dockCollection.DelDock(listBoxDocks.SelectedItem.ToString());
+                    ReloadLevels();
+                }
+            }
+        }
         /// <summary>
         /// Обработка нажатия кнопки "Пришвартовать судно"
         /// </summary>
@@ -42,17 +101,21 @@ namespace WinFormsLaba1
         /// <param name="e"></param>
         private void buttonSetBoat_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxDocks.SelectedIndex > -1)
             {
-                var boat = new Boat(100, 1000, dialog.Color);
-                if (dock + boat != -1)
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Draw();
-                }
-                else
-                {
-                    MessageBox.Show("Док уже заполнен");
+                    var car = new Boat(100, 1000, dialog.Color);
+                    if (dockCollection[listBoxDocks.SelectedItem.ToString()] +
+                   car)
+                    {
+                        Draw();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Парковка переполнена");
+                    }
                 }
             }
         }
@@ -64,22 +127,25 @@ namespace WinFormsLaba1
         /// <param name="e"></param>
         private void buttonSetShip_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxDocks.SelectedIndex > -1)
             {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                Random rnd = new Random();
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    var ship = new Ship(100, 1000, dialog.Color, dialogDop.Color,
-                    true, true, true, rnd.Next(1, 3));
-                    if (dock + ship != -1)
+                    ColorDialog dialogDop = new ColorDialog();
+                    if (dialogDop.ShowDialog() == DialogResult.OK)
                     {
-                        Draw();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Док уже заполнен");
+                        var car = new Ship(100, 1000, dialog.Color,
+                        dialogDop.Color, true, true, true, rnd.Next(1, 3));
+                        if (dockCollection[listBoxDocks.SelectedItem.ToString()] + car)
+                        {
+                            Draw();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Парковка переполнена");
+                        }
                     }
                 }
             }
@@ -92,9 +158,10 @@ namespace WinFormsLaba1
         /// <param name="e"></param>
         private void buttonTakeBoat_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox.Text != "")
+            if (listBoxDocks.SelectedIndex > -1 && maskedTextBox.Text != "")
             {
-                var boat = dock - Convert.ToInt32(maskedTextBox.Text);
+                var boat = dockCollection[listBoxDocks.SelectedItem.ToString()] -
+               Convert.ToInt32(maskedTextBox.Text);
                 if (boat != null)
                 {
                     FormShip form = new FormShip();
@@ -103,6 +170,15 @@ namespace WinFormsLaba1
                 }
                 Draw();
             }
+        }
+        /// <summary>
+        /// Метод обработки выбора элемента на listBoxLevels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listBoxDocks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Draw();
         }
     }
 }

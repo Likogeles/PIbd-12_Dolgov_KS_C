@@ -12,7 +12,11 @@ namespace WinFormsLaba1
         /// <summary>
         /// Массив объектов, которые храним
         /// </summary>
-        private readonly T[] _places;
+        private readonly List<T> _places;
+        /// <summary>
+        /// Максимальное количество мест на парковке
+        /// </summary>
+        private readonly int _maxCount;
         /// <summary>
         /// Ширина окна отрисовки
         /// </summary>
@@ -39,7 +43,8 @@ namespace WinFormsLaba1
         {
             int width = picWidth / _placeSizeWidth;
             int height = picHeight / _placeSizeHeight;
-            _places = new T[width * height];
+            _maxCount = width * height;
+            _places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight;
         }
@@ -51,18 +56,14 @@ namespace WinFormsLaba1
         /// <param name="p">Доки</param>
         /// <param name="boat">Добавляемый корабль</param>
         /// <returns></returns>
-        public static int operator +(Dock<T> d, T boat)
+        public static bool operator +(Dock<T> d, T boat)
         {
-            int ind = d._places.Length;
-            for(int i = 0; i < d._places.Length; i++)
+            if(d._places.Count >= d._maxCount)
             {
-                if(d._places[i] == null)
-                {
-                    d._places[i] = boat;
-                    return i;
-                }
+                return false;
             }
-            return -1;
+            d._places.Add(boat);
+            return true;
         }
 
         /// <summary>
@@ -74,9 +75,9 @@ namespace WinFormsLaba1
         /// <returns></returns>
         public static T operator -(Dock<T> d, int index)
         {
-            if (index >= d._places.Length) return null;
+            if (index >= d._places.Count) return null;
             T b = d._places[index];
-            d._places[index] = null;
+            d._places.Remove(b);
             return b;
         }
         /// <summary>
@@ -86,17 +87,10 @@ namespace WinFormsLaba1
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            int x = 10;
-            int y = 10;
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i]?.DrawTransport(g, x, y);
-                x += _placeSizeWidth;
-                if (x > 600)
-                {
-                    y += _placeSizeHeight;
-                    x = 10;
-                }
+                _places[i].SetPosition(10 + i % 3 * _placeSizeWidth, 15 + i / 3 * _placeSizeHeight , pictureWidth, pictureHeight);
+                _places[i].DrawTransport(g);
             }
         }
         /// <summary>
