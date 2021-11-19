@@ -50,6 +50,12 @@
     <Compile Include="Direction.cs" />
     <Compile Include="Dock.cs" />
     <Compile Include="DockCollection.cs" />
+    <Compile Include="FormBoatConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBoatConfig.Designer.cs">
+      <DependentUpon>FormBoatConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDock.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Vehicle.cs" />
+    <EmbeddedResource Include="FormBoatConfig.resx">
+      <DependentUpon>FormBoatConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDock.resx">
       <DependentUpon>FormDock.cs</DependentUpon>
     </EmbeddedResource>

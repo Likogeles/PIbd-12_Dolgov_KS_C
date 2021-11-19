@@ -130,7 +130,7 @@ namespace WinFormsLaba1
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.pictureBoxShips);
             this.Name = "FormShip";
-            this.Text = "Катер";
+            this.Text = "Лодка";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShips)).EndInit();
             this.ResumeLayout(false);
 

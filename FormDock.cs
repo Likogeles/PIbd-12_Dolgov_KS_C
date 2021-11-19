@@ -20,7 +20,7 @@ namespace WinFormsLaba1
         {
             InitializeComponent();
             dockCollection = new DockCollection(pictureBoxDock.Width,
-pictureBoxDock.Height);
+            pictureBoxDock.Height);
         }
         /// <summary>
         /// Заполнение listBoxDocks
@@ -34,12 +34,12 @@ pictureBoxDock.Height);
                 listBoxDocks.Items.Add(dockCollection.Keys[i]);
             }
             if (listBoxDocks.Items.Count > 0 && (index == -1 || index >=
-           listBoxDocks.Items.Count))
+            listBoxDocks.Items.Count))
             {
                 listBoxDocks.SelectedIndex = 0;
             }
             else if (listBoxDocks.Items.Count > 0 && index > -1 && index <
-           listBoxDocks.Items.Count)
+            listBoxDocks.Items.Count)
             {
                 listBoxDocks.SelectedIndex = index;
             }
@@ -50,11 +50,9 @@ pictureBoxDock.Height);
         private void Draw()
         {
             if (listBoxDocks.SelectedIndex > -1)
-            {//если выбран один из пуктов в listBox (при старте программы ни один пункт
-             //не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться к элементу
-             //listBox)
+            {
                 Bitmap bmp = new Bitmap(pictureBoxDock.Width,
-               pictureBoxDock.Height);
+                pictureBoxDock.Height);
                 Graphics gr = Graphics.FromImage(bmp);
                 dockCollection[listBoxDocks.SelectedItem.ToString()].Draw(gr);
                 pictureBoxDock.Image = bmp;
@@ -95,58 +93,32 @@ pictureBoxDock.Height);
             }
         }
         /// <summary>
-        /// Обработка нажатия кнопки "Пришвартовать судно"
+        /// Обработка нажатия кнопки "Добавить лодку"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonSetBoat_Click(object sender, EventArgs e)
         {
-            if (listBoxDocks.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var car = new Boat(100, 1000, dialog.Color);
-                    if (dockCollection[listBoxDocks.SelectedItem.ToString()] +
-                   car)
-                    {
-                        Draw();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Парковка переполнена");
-                    }
-                }
-            }
+            var formCarConfig = new FormBoatConfig();
+            formCarConfig.AddEvent(AddBoat);
+            formCarConfig.Show();
         }
 
         /// <summary>
-        /// Обработка нажатия кнопки "Пришвартовать катер"
+        /// Метод добавления лодки
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSetShip_Click(object sender, EventArgs e)
+        /// <param name="car"></param>
+        private void AddBoat(Vehicle car)
         {
-            if (listBoxDocks.SelectedIndex > -1)
+            if (car != null && listBoxDocks.SelectedIndex > -1)
             {
-                Random rnd = new Random();
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if ((dockCollection[listBoxDocks.SelectedItem.ToString()]) + car)
                 {
-                    ColorDialog dialogDop = new ColorDialog();
-                    if (dialogDop.ShowDialog() == DialogResult.OK)
-                    {
-                        var car = new Ship(100, 1000, dialog.Color,
-                        dialogDop.Color, true, true, true, rnd.Next(1, 3));
-                        if (dockCollection[listBoxDocks.SelectedItem.ToString()] + car)
-                        {
-                            Draw();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Парковка переполнена");
-                        }
-                    }
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
                 }
             }
         }
