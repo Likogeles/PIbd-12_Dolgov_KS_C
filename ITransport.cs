@@ -26,6 +26,6 @@ namespace WinFormsLaba1
         /// Отрисовка
         /// </summary>
         /// <param name="g"></param>
-        void DrawTransport(Graphics g, int x=0, int y = 0);
+        void DrawTransport(Graphics g);
     }
 }
