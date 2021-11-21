@@ -14,11 +14,29 @@ namespace WinFormsLaba1
 	{
 		private ITransport boat;
 
+		/// <summary>
+		/// Конструктор
+		/// </summary>
 		public FormShip()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Передача судна на форму
+		/// </summary>
+		/// <param name="ship"></param>
+		public void SetShip(ITransport boat)
+		{
+			Random rnd = new Random();
+			this.boat = boat;
+			boat.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxShips.Width, pictureBoxShips.Height);
+			Draw();
+	    }
+
+		/// <summary>
+		/// Метод отрисовки судна
+		/// </summary>
 		private void Draw()
 		{
 			Bitmap bmp = new Bitmap(pictureBoxShips.Width, pictureBoxShips.Height);
@@ -27,6 +45,11 @@ namespace WinFormsLaba1
 			pictureBoxShips.Image = bmp;
 		}
 
+		/// <summary>
+		/// Обработка нажатия кнопки "Создать лодку"
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
@@ -35,6 +58,11 @@ namespace WinFormsLaba1
 			Draw();
 		}
 
+		/// <summary>
+		/// Обработка нажатия кнопки "Создать катер"
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void buttonCreateBoat_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
@@ -43,29 +71,30 @@ namespace WinFormsLaba1
 			Draw();
 		}
 
-
+		/// <summary>
+		/// Обработка нажатия кнопок управления
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void buttonMove_Click(object sender, EventArgs e)
 		{
-			if (boat != null)
+			string name = (sender as Button).Name;
+			switch (name)
 			{
-				string name = (sender as Button).Name;
-				switch (name)
-				{
-					case "buttonUp":
-						boat.MoveTransport(Direction.Up);
-						break;
-					case "buttonDown":
-						boat.MoveTransport(Direction.Down);
-						break;
-					case "buttonLeft":
-						boat.MoveTransport(Direction.Left);
-						break;
-					case "buttonRight":
-						boat.MoveTransport(Direction.Right);
-						break;
-				}
-				Draw();
+				case "buttonUp":
+					boat?.MoveTransport(Direction.Up);
+					break;
+				case "buttonDown":
+					boat?.MoveTransport(Direction.Down);
+					break;
+				case "buttonLeft":
+					boat?.MoveTransport(Direction.Left);
+					break;
+				case "buttonRight":
+					boat?.MoveTransport(Direction.Right);
+					break;
 			}
+			Draw();
 		}
     }
 }

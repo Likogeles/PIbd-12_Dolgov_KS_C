@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WinFormsLaba1
 {
-    interface ITransport
+    public interface ITransport
     {
         /// <summary>
         /// Установка позиции
@@ -26,6 +26,6 @@ namespace WinFormsLaba1
         /// Отрисовка
         /// </summary>
         /// <param name="g"></param>
-        void DrawTransport(Graphics g);
+        void DrawTransport(Graphics g, int x=0, int y = 0);
     }
 }

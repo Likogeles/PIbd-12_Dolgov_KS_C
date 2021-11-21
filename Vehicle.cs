@@ -44,7 +44,7 @@ namespace WinFormsLaba1
             _pictureHeight = height;
             _pictureWidth = width;
         }
-        public abstract void DrawTransport(Graphics g);
+        public abstract void DrawTransport(Graphics g, int x = 0, int y = 0);
         public abstract void MoveTransport(Direction direction);
     }
 }
