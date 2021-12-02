@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace WinFormsLaba1
 {
@@ -25,6 +26,11 @@ namespace WinFormsLaba1
         /// </summary>
         private readonly int pictureHeight;
         /// <summary>
+        /// Разделитель для записи информации в файл
+        /// </summary>
+        private readonly char separator = ':';
+
+        /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="pictureWidth"></param>
@@ -42,7 +48,7 @@ namespace WinFormsLaba1
         /// <param name="name">Название дока</param>
         public void AddDock(string name)
         {
-            if(!dockStages.ContainsKey(name))
+            if (!dockStages.ContainsKey(name))
                 dockStages.Add(name, new Dock<Vehicle>(pictureWidth, pictureHeight));
         }
         /// <summary>
@@ -61,11 +67,119 @@ namespace WinFormsLaba1
         /// <returns></returns>
         public Dock<Vehicle> this[string ind]
         {
-            get {
+            get
+            {
                 if (dockStages.ContainsKey(ind))
                     return dockStages[ind];
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Сохранение информации по лодках в гаванях в файл
+        /// </summary>
+        /// <param name="filename">Путь и имя файла</param>
+        /// <returns></returns>
+
+
+        public bool SaveData(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                sw.Write($"DockingCollection{Environment.NewLine}");
+                foreach (var level in dockStages)
+                {
+                    //Начинаем гавань
+                    sw.Write($"Docking{separator}{level.Key}{Environment.NewLine}");
+                    ITransport boat = null;
+                    for (int i = 0; (boat = level.Value.GetNext(i)) != null; i++)
+                    {
+                        if (boat != null)
+                        {
+                            //если место не пустое
+                            //Записываем тип лодки
+                            if (boat.GetType().Name == "Boat")
+                            {
+                                sw.Write($"Boat{separator}");
+                            }
+                            if (boat.GetType().Name == "Ship")
+                            {
+                                sw.Write($"Ship{separator}");
+                            }
+                            //Записываемые параметры
+                            sw.Write(boat + Environment.NewLine);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Загрузка нформации по лодках в гаванях из файла
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public bool LoadData(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                return false;
+            }
+
+            Vehicle boat = null;
+            string key = string.Empty;
+
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                string strs = sr.ReadLine();
+                if (strs != null)
+                {
+                    if (strs.Contains("DockingCollection"))
+                    {
+                        //очищаем записи
+                        dockStages.Clear();
+                    }
+                    else
+                    {
+                        //если нет такой записи, то это не те данные
+                        return false;
+                    }
+                }
+                while ((strs = sr.ReadLine()) != null)
+                {
+                    //идем по считанным записям
+                    if (strs.Contains("Docking"))
+                    {
+                        //начинаем новую гавань
+                        key = strs.Split(separator)[1];
+                        dockStages.Add(key, new Dock<Vehicle>(pictureWidth, pictureHeight));
+                        continue;
+                    }
+                    if (string.IsNullOrEmpty(strs))
+                    {
+                        continue;
+                    }
+                    if (strs.Split(separator)[0] == "Boat")
+                    {
+                        boat = new Boat(strs.Split(separator)[1]);
+                    }
+                    else if (strs.Split(separator)[0] == "Ship")
+                    {
+                        boat = new Ship(strs.Split(separator)[1]);
+                    }
+                    var result = dockStages[key] + boat;
+                    if (!result)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
