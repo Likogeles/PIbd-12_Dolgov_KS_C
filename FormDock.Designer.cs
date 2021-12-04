@@ -36,6 +36,11 @@ namespace WinFormsLaba1
             this.buttonTakeBoat = new System.Windows.Forms.Button();
             this.maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxNewLevelName = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listBoxDocks = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDock)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +55,7 @@ namespace WinFormsLaba1
             // 
             // buttonSetBoat
             // 
-            this.buttonSetBoat.Location = new System.Drawing.Point(673, 12);
+            this.buttonSetBoat.Location = new System.Drawing.Point(673, 241);
             this.buttonSetBoat.Name = "buttonSetBoat";
             this.buttonSetBoat.Size = new System.Drawing.Size(115, 34);
             this.buttonSetBoat.TabIndex = 2;
@@ -60,7 +65,7 @@ namespace WinFormsLaba1
             // 
             // buttonSetShip
             // 
-            this.buttonSetShip.Location = new System.Drawing.Point(673, 52);
+            this.buttonSetShip.Location = new System.Drawing.Point(673, 281);
             this.buttonSetShip.Name = "buttonSetShip";
             this.buttonSetShip.Size = new System.Drawing.Size(115, 34);
             this.buttonSetShip.TabIndex = 0;
@@ -73,7 +78,7 @@ namespace WinFormsLaba1
             this.groupBox2.Controls.Add(this.buttonTakeBoat);
             this.groupBox2.Controls.Add(this.maskedTextBox);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(673, 93);
+            this.groupBox2.Location = new System.Drawing.Point(673, 322);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(115, 77);
             this.groupBox2.TabIndex = 3;
@@ -106,11 +111,61 @@ namespace WinFormsLaba1
             this.label1.TabIndex = 0;
             this.label1.Text = "Пристань:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(709, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Гавани";
+            // 
+            // textBoxNewLevelName
+            // 
+            this.textBoxNewLevelName.Location = new System.Drawing.Point(673, 26);
+            this.textBoxNewLevelName.Name = "textBoxNewLevelName";
+            this.textBoxNewLevelName.Size = new System.Drawing.Size(115, 20);
+            this.textBoxNewLevelName.TabIndex = 5;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(673, 53);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(115, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Добавить гавань";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.buttonAddDock_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(673, 184);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(115, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Удалить гавань";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.buttonDelDock_Click);
+            // 
+            // listBoxDocks
+            // 
+            this.listBoxDocks.FormattingEnabled = true;
+            this.listBoxDocks.Location = new System.Drawing.Point(673, 83);
+            this.listBoxDocks.Name = "listBoxDocks";
+            this.listBoxDocks.Size = new System.Drawing.Size(115, 95);
+            this.listBoxDocks.TabIndex = 8;
+            this.listBoxDocks.SelectedIndexChanged += new System.EventHandler(this.listBoxDocks_SelectedIndexChanged);
+            // 
             // FormDock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBoxDocks);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBoxNewLevelName);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.buttonSetBoat);
             this.Controls.Add(this.buttonSetShip);
@@ -121,6 +176,7 @@ namespace WinFormsLaba1
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -133,5 +189,10 @@ namespace WinFormsLaba1
         private System.Windows.Forms.Button buttonTakeBoat;
         private System.Windows.Forms.MaskedTextBox maskedTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxNewLevelName;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox listBoxDocks;
     }
 }
