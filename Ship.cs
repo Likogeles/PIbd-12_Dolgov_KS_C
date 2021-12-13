@@ -53,6 +53,25 @@ namespace WinFormsLaba1
 			Rotors = rotors;
 			RotorsNum = rotorsNum;
 		}
+		/// <summary>
+		/// Конструктор для загрузки с файла
+		/// </summary>
+		/// <param name="info"></param>
+		public Ship(string info) : base(info)
+		{
+			string[] strs = info.Split(separator);
+			if (strs.Length == 8)
+			{
+				MaxSpeed = Convert.ToInt32(strs[0]);
+				Weight = Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+				DopColor = Color.FromName(strs[3]);
+				Lines = Convert.ToBoolean(strs[4]);
+				Window = Convert.ToBoolean(strs[5]);
+				Rotors = Convert.ToBoolean(strs[6]);
+				RotorsNum = Convert.ToInt32(strs[7]);
+			}
+		}
 
 		/// <summary>
 		/// Отрисовка катера
@@ -186,6 +205,11 @@ namespace WinFormsLaba1
 		public void SetDopColor(Color color)
 		{
 			DopColor = color;
+		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}{separator}{DopColor.Name}{separator}{Lines}{separator}{Window}{separator}{Rotors}{separator}{RotorsNum}";
 		}
 	}
 }

@@ -110,5 +110,20 @@ namespace WinFormsLaba1
                (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
         }
+
+        /// <summary>
+        /// Функция получения элемента из списка
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T GetNext(int index)
+        {
+            if (index < 0 || index >= _places.Count)
+            {
+                return null;
+            }
+            return _places[index];
+        }
+
     }
 }

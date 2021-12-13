@@ -18,6 +18,11 @@ namespace WinFormsLaba1
         /// </summary>
         protected readonly int BoatHeight;
         /// <summary>
+        /// Разделитель для записи информации по объекту в файл
+        /// </summary>
+        protected readonly char separator = ';';
+
+        /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="maxSpeed">Максимальная скорость</param>
@@ -29,6 +34,22 @@ namespace WinFormsLaba1
             Weight = weight;
             MainColor = mainColor;
         }
+
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info">Информация по объекту</param>
+        public Boat(string info)
+        {
+            string[] strs = info.Split(separator);
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+            }
+        }
+
         /// <summary>
         /// Конструкторс изменением размеров машины
         /// </summary>
@@ -100,6 +121,10 @@ namespace WinFormsLaba1
 
             g.DrawRectangle(pen, (int)_startPosX + 10, (int)_startPosY + 10, 80, 40);
             g.FillRectangle(dopBrush, (int)_startPosX + 10, (int)_startPosY + 10, 80, 40);
+        }
+        public override string ToString()
+        {
+            return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
         }
     }
 }
