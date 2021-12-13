@@ -31,7 +31,6 @@ namespace WinFormsLaba1
         {
             this.pictureBoxDock = new System.Windows.Forms.PictureBox();
             this.buttonSetBoat = new System.Windows.Forms.Button();
-            this.buttonSetShip = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonTakeBoat = new System.Windows.Forms.Button();
             this.maskedTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -55,23 +54,13 @@ namespace WinFormsLaba1
             // 
             // buttonSetBoat
             // 
-            this.buttonSetBoat.Location = new System.Drawing.Point(673, 241);
+            this.buttonSetBoat.Location = new System.Drawing.Point(673, 282);
             this.buttonSetBoat.Name = "buttonSetBoat";
             this.buttonSetBoat.Size = new System.Drawing.Size(115, 34);
             this.buttonSetBoat.TabIndex = 2;
-            this.buttonSetBoat.Text = "Пришвартовать корабль";
+            this.buttonSetBoat.Text = "Добавить лодку";
             this.buttonSetBoat.UseVisualStyleBackColor = true;
             this.buttonSetBoat.Click += new System.EventHandler(this.buttonSetBoat_Click);
-            // 
-            // buttonSetShip
-            // 
-            this.buttonSetShip.Location = new System.Drawing.Point(673, 281);
-            this.buttonSetShip.Name = "buttonSetShip";
-            this.buttonSetShip.Size = new System.Drawing.Size(115, 34);
-            this.buttonSetShip.TabIndex = 0;
-            this.buttonSetShip.Text = "Пришвартовать катер";
-            this.buttonSetShip.UseVisualStyleBackColor = true;
-            this.buttonSetShip.Click += new System.EventHandler(this.buttonSetShip_Click);
             // 
             // groupBox2
             // 
@@ -168,10 +157,9 @@ namespace WinFormsLaba1
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.buttonSetBoat);
-            this.Controls.Add(this.buttonSetShip);
             this.Controls.Add(this.pictureBoxDock);
             this.Name = "FormDock";
-            this.Text = "FormDock";
+            this.Text = "Гавань";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDock)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -184,7 +172,6 @@ namespace WinFormsLaba1
 
         private System.Windows.Forms.PictureBox pictureBoxDock;
         private System.Windows.Forms.Button buttonSetBoat;
-        private System.Windows.Forms.Button buttonSetShip;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonTakeBoat;
         private System.Windows.Forms.MaskedTextBox maskedTextBox;

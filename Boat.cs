@@ -12,11 +12,11 @@ namespace WinFormsLaba1
         /// <summary>
         /// Ширина отрисовки лодки
         /// </summary>
-        protected readonly int BoatWidth = 130;
+        protected readonly int BoatWidth;
         /// <summary>
         /// Высота отрисовки лодки
         /// </summary>
-        protected readonly int BoatHeight = 60;
+        protected readonly int BoatHeight;
         /// <summary>
         /// Конструктор
         /// </summary>

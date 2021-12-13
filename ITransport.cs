@@ -15,7 +15,7 @@ namespace WinFormsLaba1
         /// <param name="x">Координата X</param>
         /// <param name="y">Координата Y</param>
         /// <param name="width">Ширина картинки</param>
-        /// <param name="height">Высота картинки</param>
+        /// <param name="height">Высота картинки</param>6
         void SetPosition(int x, int y, int width, int height);
         /// <summary>
         /// Изменение направления пермещения
@@ -27,5 +27,10 @@ namespace WinFormsLaba1
         /// </summary>
         /// <param name="g"></param>
         void DrawTransport(Graphics g);
+        /// <summary>
+        /// Смена основного цвета
+        /// </summary>
+        /// <param name="color"></param>
+        void SetMainColor(Color color);
     }
 }
