@@ -7,14 +7,18 @@ using System.Drawing;
 
 namespace WinFormsLaba1
 {
+    /// <summary>
+    /// Параметризованный класс для хранения набора объектов от интерфейса ITransport
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     class Dock<T> where T : class, ITransport
     {
         /// <summary>
-        /// Массив объектов, которые храним
+        /// Список объектов, которые храним
         /// </summary>
         private readonly List<T> _places;
         /// <summary>
-        /// Максимальное количество мест на парковке
+        /// Максимальное количество мест в доке
         /// </summary>
         private readonly int _maxCount;
         /// <summary>
@@ -60,7 +64,7 @@ namespace WinFormsLaba1
         {
             if(d._places.Count >= d._maxCount)
             {
-                return false;
+                throw new DockingOverflowException();
             }
             d._places.Add(boat);
             return true;
@@ -75,7 +79,10 @@ namespace WinFormsLaba1
         /// <returns></returns>
         public static T operator -(Dock<T> d, int index)
         {
-            if (index >= d._places.Count) return null;
+            if (index < 0 || index > d._places.Count)
+            {
+                throw new DockingNotFoundException(index);
+            }
             T b = d._places[index];
             d._places.Remove(b);
             return b;
