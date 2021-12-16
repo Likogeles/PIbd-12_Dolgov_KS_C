@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace WinFormsLaba1
     /// Параметризованный класс для хранения набора объектов от интерфейса ITransport
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class Dock<T> where T : class, ITransport
+    class Dock<T> : IEnumerator<T>, IEnumerable<T>
+        where T : class, ITransport
     {
         /// <summary>
         /// Список объектов, которые храним
@@ -37,6 +39,12 @@ namespace WinFormsLaba1
         /// Размер пристани (высота)
         /// </summary>
         private readonly int _placeSizeHeight = 80;
+        /// <summary>
+        /// Текущий элемент для вывода через IEnumerator (будет обращаться по своему индексу к ключу словаря, по которму будет возвращаться запись)
+        /// </summary>
+        private int _currentIndex;
+        public T Current => _places[_currentIndex];
+        object IEnumerator.Current => _places[_currentIndex];
 
         /// <summary>
         /// Конструктор
@@ -51,6 +59,7 @@ namespace WinFormsLaba1
             _places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight;
+            _currentIndex = -1;
         }
 
         /// <summary>
@@ -62,9 +71,13 @@ namespace WinFormsLaba1
         /// <returns></returns>
         public static bool operator +(Dock<T> d, T boat)
         {
-            if(d._places.Count >= d._maxCount)
+            if (d._places.Count >= d._maxCount)
             {
                 throw new DockingOverflowException();
+            }
+            if (d._places.Contains(boat))
+            {
+                throw new DockingAlreadyHaveException();
             }
             d._places.Add(boat);
             return true;
@@ -79,7 +92,7 @@ namespace WinFormsLaba1
         /// <returns></returns>
         public static T operator -(Dock<T> d, int index)
         {
-            if (index < 0 || index > d._places.Count)
+            if (index < -1 || index > d._places.Count)
             {
                 throw new DockingNotFoundException(index);
             }
@@ -96,7 +109,7 @@ namespace WinFormsLaba1
             DrawMarking(g);
             for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i].SetPosition(10 + i % 3 * _placeSizeWidth, 15 + i / 3 * _placeSizeHeight , pictureWidth, pictureHeight);
+                _places[i].SetPosition(10 + i % 3 * _placeSizeWidth, 15 + i / 3 * _placeSizeHeight, pictureWidth, pictureHeight);
                 _places[i].DrawTransport(g);
             }
         }
@@ -107,7 +120,8 @@ namespace WinFormsLaba1
         private void DrawMarking(Graphics g)
         {
             Pen pen = new Pen(Color.Black, 3);
-            for (int i = 0; i < pictureWidth / _placeSizeWidth; i++){
+            for (int i = 0; i < pictureWidth / _placeSizeWidth; i++)
+            {
                 for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j)
                 {
                     g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i *
@@ -130,6 +144,51 @@ namespace WinFormsLaba1
                 return null;
             }
             return _places[index];
+        }
+        /// <summary>
+        /// Сортировка лодок в гавани
+        /// </summary>
+        public void Sort() => _places.Sort((IComparer<T>)new BoatComparer());
+        /// <summary>
+        /// Метод интерфейса IEnumerator, вызываемый при удалении объекта
+        /// </summary>
+        public void Dispose()
+        {
+        }
+        /// <summary>
+        /// Метод интерфейса IEnumerator для перехода к следующему элементу или началу коллекции
+        /// </summary>
+        /// <returns></returns>
+        public bool MoveNext()
+        {
+            _currentIndex++;
+            if(_currentIndex == _maxCount)
+            {
+                Reset();
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Метод интерфейса IEnumerator для сброса и возврата к началу коллекции
+        /// </summary>
+        public void Reset()
+        {
+            _currentIndex = 0;
+        }
+        /// <summary>
+        /// Метод интерфейса IEnumerable
+        /// </summary>
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+        /// <summary>
+        /// Метод интерфейса IEnumerable
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
         }
 
     }

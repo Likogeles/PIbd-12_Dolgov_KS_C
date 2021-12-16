@@ -55,9 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Boat.cs" />
+    <Compile Include="BoatComparer.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Dock.cs" />
     <Compile Include="DockCollection.cs" />
+    <Compile Include="DockingAlreadyHaveException.cs" />
     <Compile Include="DockingNotFoundException.cs" />
     <Compile Include="DockingNotLoadBoatException.cs" />
     <Compile Include="DockingOccupiedPlaceException.cs" />

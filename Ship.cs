@@ -7,24 +7,28 @@ using System.Drawing;
 
 namespace WinFormsLaba1
 {
-	public class Ship : Boat
+	public class Ship : Boat, IEquatable<Ship>
 	{
 		/// <summary>
 		/// Дополнительный цвет
 		/// </summary>
 		public Color DopColor { private set; get; }
+
 		/// <summary>
 		/// Признак наличия спортивных наклеек
 		/// </summary>
 		public bool Lines { private set; get; }
+
 		/// <summary>
 		/// Признак наличия лобового стекла
 		/// </summary>
 		public bool Window { private set; get; }
+
 		/// <summary>
 		/// Признак наличия моторов
 		/// </summary>
 		public bool Rotors { private set; get; }
+
 		/// <summary>
 		/// Количество моторов
 		/// </summary>
@@ -42,7 +46,6 @@ namespace WinFormsLaba1
 		/// <param name="window">Признак наличия спортивных наклеек</param>
 		/// <param name="rotors">Признак наличия пропеллеров</param>
 		/// <param name="rotorsNum">Количество моторов (1-3) (по умолчанию 1)</param>
-
 		public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor,
 			bool lines, bool window, bool rotors, int rotorsNum) :
 			base(maxSpeed, weight, mainColor, 130, 60)
@@ -53,6 +56,7 @@ namespace WinFormsLaba1
 			Rotors = rotors;
 			RotorsNum = rotorsNum;
 		}
+
 		/// <summary>
 		/// Конструктор для загрузки с файла
 		/// </summary>
@@ -92,13 +96,13 @@ namespace WinFormsLaba1
 			PointF p4;
 			PointF p5;
 			PointF[] points = new PointF[5];
-			
+
 
 			if (Window)
 			{
 				g.FillRectangle(new SolidBrush(Color.Blue), (int)_startPosX + 70, (int)_startPosY + 12, 19, 36);
 			}
-			
+
 			if (Lines)
 			{
 				p1 = new PointF((int)_startPosX + 4, (int)_startPosY + 4);
@@ -114,11 +118,11 @@ namespace WinFormsLaba1
 
 				g.DrawPolygon(doppen, points);
 			}
-            
-			
+
+
 			if (Rotors)
-            {
-				if(RotorsNum == 1)
+			{
+				if (RotorsNum == 1)
 				{
 					p1 = new PointF(_startPosX - 7, _startPosY + 20);
 					p2 = new PointF(_startPosX - 5, _startPosY + 24);
@@ -198,6 +202,7 @@ namespace WinFormsLaba1
 				}
 			}
 		}
+
 		/// <summary>
 		/// Смена дополнительного цвета
 		/// </summary>
@@ -210,6 +215,77 @@ namespace WinFormsLaba1
 		public override string ToString()
 		{
 			return $"{base.ToString()}{separator}{DopColor.Name}{separator}{Lines}{separator}{Window}{separator}{Rotors}{separator}{RotorsNum}";
+		}
+
+		/// <summary>
+		/// Метод интерфейса IEquatable для класса SportCar
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool Equals(Ship other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+			if (GetType().Name != other.GetType().Name)
+			{
+				return false;
+			}
+			if (MaxSpeed != other.MaxSpeed)
+			{
+				return false;
+			}
+			if (Weight != other.Weight)
+			{
+				return false;
+			}
+			if (MainColor != other.MainColor)
+			{
+				return false;
+			}
+			if (DopColor != other.DopColor)
+			{
+				return false;
+			}
+			if (Lines != other.Lines)
+			{
+				return false;
+			}
+			if (Window != other.Window)
+			{
+				return false;
+			}
+			if (Rotors != other.Rotors)
+			{
+				return false;
+			}
+			if (RotorsNum != other.RotorsNum)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Перегрузка метода от object
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public override bool Equals(Object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+			if (!(obj is Ship boatObj))
+			{
+				return false;
+			}
+			else
+			{
+				return Equals(boatObj);
+			}
 		}
 	}
 }

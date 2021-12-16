@@ -93,8 +93,8 @@ namespace WinFormsLaba1
                 {
                     //Начинаем гавань
                     sw.Write($"Docking{separator}{level.Key}{Environment.NewLine}");
-                    ITransport boat = null;
-                    for (int i = 0; (boat = level.Value.GetNext(i)) != null; i++)
+
+                    foreach (ITransport boat in level.Value)
                     {
                         if (boat != null)
                         {
