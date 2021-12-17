@@ -80,8 +80,6 @@ namespace WinFormsLaba1
         /// </summary>
         /// <param name="filename">Путь и имя файла</param>
         /// <returns></returns>
-
-
         public bool SaveData(string filename)
         {
             if (File.Exists(filename))
@@ -120,15 +118,14 @@ namespace WinFormsLaba1
         }
 
         /// <summary>
-        /// Загрузка нформации по лодках в гаванях из файла
+        /// Загрузка нформации по лодкам в гаванях из файла
         /// </summary>
         /// <param name="filename"></param>
-        /// <returns></returns>
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
 
             Vehicle boat = null;
@@ -147,7 +144,7 @@ namespace WinFormsLaba1
                     else
                     {
                         //если нет такой записи, то это не те данные
-                        return false;
+                        throw new FileFormatException();
                     }
                 }
                 while ((strs = sr.ReadLine()) != null)
@@ -172,14 +169,12 @@ namespace WinFormsLaba1
                     {
                         boat = new Ship(strs.Split(separator)[1]);
                     }
-                    var result = dockStages[key] + boat;
-                    if (!result)
+                    if (!(dockStages[key] + boat))
                     {
-                        return false;
+                        throw new DockingNotLoadBoatException();
                     }
                 }
             }
-            return true;
         }
     }
 }

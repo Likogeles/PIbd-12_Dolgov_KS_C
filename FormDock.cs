@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,11 +17,16 @@ namespace WinFormsLaba1
         /// Объект от класса-коллекции гаваней
         /// </summary>
         private readonly DockCollection dockCollection;
+        /// <summary>
+        /// Логгер
+        /// </summary>
+        private readonly Logger logger;
         public FormDock()
         {
             InitializeComponent();
             dockCollection = new DockCollection(pictureBoxDock.Width,
             pictureBoxDock.Height);
+            logger = LogManager.GetCurrentClassLogger();
         }
         /// <summary>
         /// Заполнение listBoxDocks
@@ -71,6 +77,7 @@ namespace WinFormsLaba1
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            logger.Info($"Добавили гавань {textBoxNewLevelName.Text}");
             dockCollection.AddDock(textBoxNewLevelName.Text);
             ReloadLevels();
         }
@@ -87,6 +94,7 @@ namespace WinFormsLaba1
                 if (MessageBox.Show($"Удалить гавань {listBoxDocks.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    logger.Info($"Удалили гавань{ listBoxDocks.SelectedItem.ToString()}");
                     dockCollection.DelDock(listBoxDocks.SelectedItem.ToString());
                     ReloadLevels();
                 }
@@ -108,17 +116,34 @@ namespace WinFormsLaba1
         /// Метод добавления лодки
         /// </summary>
         /// <param name="car"></param>
-        private void AddBoat(Vehicle car)
+        private void AddBoat(Vehicle boat)
         {
-            if (car != null && listBoxDocks.SelectedIndex > -1)
+            if (boat != null && listBoxDocks.SelectedIndex > -1)
             {
-                if ((dockCollection[listBoxDocks.SelectedItem.ToString()]) + car)
+                try
                 {
+                    if ((dockCollection[listBoxDocks.SelectedItem.ToString()]) + boat)
+                    {
+                        Draw();
+                        logger.Info($"Добавлена лодка {boat}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Лодку не удалось поставить");
+                    }
                     Draw();
                 }
-                else
+                catch (DockingOverflowException ex)
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    logger.Warn("Переполнение гавани");
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Неизвестная ошибка");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -132,15 +157,32 @@ namespace WinFormsLaba1
         {
             if (listBoxDocks.SelectedIndex > -1 && maskedTextBox.Text != "")
             {
-                var boat = dockCollection[listBoxDocks.SelectedItem.ToString()] -
-               Convert.ToInt32(maskedTextBox.Text);
-                if (boat != null)
+                try
                 {
-                    FormShip form = new FormShip();
-                    form.SetShip(boat);
-                    form.ShowDialog();
+
+                    var boat = dockCollection[listBoxDocks.SelectedItem.ToString()] -
+               Convert.ToInt32(maskedTextBox.Text);
+                    if (boat != null)
+                    {
+                        FormShip form = new FormShip();
+                        form.SetShip(boat);
+                        form.ShowDialog();
+                        logger.Info($"Изъята лодка{boat} с места{ maskedTextBox.Text}");
+                        Draw();
+                    }
                 }
-                Draw();
+                catch (DockingNotFoundException ex)
+                {
+                    logger.Warn($"Не найдена лодка в доке {maskedTextBox.Text}");
+                    MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Неизвестная ошибка");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         /// <summary>
@@ -150,6 +192,7 @@ namespace WinFormsLaba1
         /// <param name="e"></param>
         private void listBoxDocks_SelectedIndexChanged(object sender, EventArgs e)
         {
+            logger.Info($"Перешли в гавань{ listBoxDocks.SelectedItem.ToString()}");
             Draw();
         }
 
@@ -162,14 +205,18 @@ namespace WinFormsLaba1
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (dockCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    dockCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
+                    logger.Info("Сохранено в файл " + saveFileDialog.FileName);
+                } catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Неизвестная ошибка при сохранении");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
 
         }
@@ -183,15 +230,26 @@ namespace WinFormsLaba1
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (dockCollection.LoadData(openFileDialog.FileName))
+                try
                 {
+
+                    dockCollection.LoadData(openFileDialog.FileName);
+
                     MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + openFileDialog.FileName);
                     ReloadLevels();
                     Draw();
                 }
-                else
+                catch (DockingOccupiedPlaceException ex)
                 {
-                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Занятое место");
+                    MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {logger.Warn("Неизвестная ошибка при сохранении загрузке");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
