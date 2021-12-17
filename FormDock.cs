@@ -135,11 +135,13 @@ namespace WinFormsLaba1
                 }
                 catch (DockingOverflowException ex)
                 {
+                    logger.Warn("Переполнение гавани");
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
+                    logger.Warn("Неизвестная ошибка");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -171,11 +173,13 @@ namespace WinFormsLaba1
                 }
                 catch (DockingNotFoundException ex)
                 {
+                    logger.Warn($"Не найдена лодка в доке {maskedTextBox.Text}");
                     MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
+                    logger.Warn("Неизвестная ошибка");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -208,6 +212,7 @@ namespace WinFormsLaba1
                     logger.Info("Сохранено в файл " + saveFileDialog.FileName);
                 } catch (Exception ex)
                 {
+                    logger.Warn("Неизвестная ошибка при сохранении");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -237,6 +242,7 @@ namespace WinFormsLaba1
                 }
                 catch (DockingOccupiedPlaceException ex)
                 {
+                    logger.Warn("Занятое место");
                     MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 }
@@ -246,8 +252,8 @@ namespace WinFormsLaba1
                    MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении",
+                {logger.Warn("Неизвестная ошибка при сохранении загрузке");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
