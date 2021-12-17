@@ -256,4 +256,3 @@ namespace WinFormsLaba1
         }
     }
 }
-// Уровень, дата, текст лога
