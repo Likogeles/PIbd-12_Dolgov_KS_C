@@ -218,7 +218,7 @@ namespace WinFormsLaba1
 		}
 
 		/// <summary>
-		/// Метод интерфейса IEquatable для класса SportCar
+		/// Метод интерфейса IEquatable для класса Ship
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>

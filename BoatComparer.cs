@@ -10,14 +10,19 @@ namespace WinFormsLaba1
     {
         public int Compare(Vehicle x, Vehicle y)
         {
-            if(x is Boat && y is Boat)
+            if(x.GetType().Name == "Boat" && y.GetType().Name == "Boat")
             {
                 return ComparerBoat((Boat)x, (Boat)y);
-            }else if (x is Ship && y is Ship)
+            }
+            else if (x.GetType().Name == "Ship" && y.GetType().Name == "Ship")
             {
                 return ComparerShip((Ship)x, (Ship)y);
             }
-            return 0;
+            else if (x.GetType().Name == "Ship" && y.GetType().Name == "Boat")
+            {
+                return 1;
+            }
+            return -1;
         }
         private int ComparerBoat(Boat x, Boat y)
         {

@@ -162,12 +162,7 @@ namespace WinFormsLaba1
         public bool MoveNext()
         {
             _currentIndex++;
-            if(_currentIndex == _maxCount)
-            {
-                Reset();
-                return false;
-            }
-            return true;
+            return _currentIndex < _places.Count();
         }
         /// <summary>
         /// Метод интерфейса IEnumerator для сброса и возврата к началу коллекции

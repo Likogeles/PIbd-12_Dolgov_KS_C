@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace WinFormsLaba1
         /// <param name="pictureHeight"></param>
         public DockCollection(int pictureWidth, int pictureHeight)
         {
+
             dockStages = new Dictionary<string, Dock<Vehicle>>();
             this.pictureWidth = pictureWidth;
             this.pictureHeight = pictureHeight;
