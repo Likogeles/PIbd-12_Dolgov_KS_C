@@ -246,6 +246,11 @@ namespace WinFormsLaba1
                     MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 }
+                catch (DockingAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {logger.Warn("Неизвестная ошибка при сохранении загрузке");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке",
@@ -253,6 +258,16 @@ namespace WinFormsLaba1
                 }
             }
 
+        }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            if (listBoxDocks.SelectedIndex > -1)
+            {
+                dockCollection[listBoxDocks.SelectedItem.ToString()].Sort();
+                Draw();
+                logger.Info("Сортировка уровней");
+            }
         }
     }
 }

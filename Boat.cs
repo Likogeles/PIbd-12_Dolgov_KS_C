@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WinFormsLaba1
 {
-    public class Boat : Vehicle
+    public class Boat : Vehicle, IEquatable<Boat>
     {
         /// <summary>
         /// Ширина отрисовки лодки
@@ -51,7 +51,7 @@ namespace WinFormsLaba1
         }
 
         /// <summary>
-        /// Конструкторс изменением размеров машины
+        /// Конструктор с изменением размеров лодки
         /// </summary>
         /// <param name="maxSpeed">Максимальная скорость</param>
         /// <param name="weight">Вес лодки</param>
@@ -125,6 +125,56 @@ namespace WinFormsLaba1
         public override string ToString()
         {
             return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
+        }
+
+        /// <summary>
+        /// Метод интерфейса IEquatable для класса Boat
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Boat other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if (MainColor != other.MainColor)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Перегрузка метода от object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is Boat boatObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(boatObj);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace WinFormsLaba1
         /// <param name="pictureHeight"></param>
         public DockCollection(int pictureWidth, int pictureHeight)
         {
+
             dockStages = new Dictionary<string, Dock<Vehicle>>();
             this.pictureWidth = pictureWidth;
             this.pictureHeight = pictureHeight;
@@ -93,8 +95,8 @@ namespace WinFormsLaba1
                 {
                     //Начинаем гавань
                     sw.Write($"Docking{separator}{level.Key}{Environment.NewLine}");
-                    ITransport boat = null;
-                    for (int i = 0; (boat = level.Value.GetNext(i)) != null; i++)
+
+                    foreach (ITransport boat in level.Value)
                     {
                         if (boat != null)
                         {
